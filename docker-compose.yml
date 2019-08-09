@@ -1,0 +1,10 @@
+version: '3'
+services:
+  chrome:
+    image: robcherry/docker-chromedriver
+    environment:
+      CHROMEDRIVER_WHITELISTED_IPS: ''
+  app:
+    depends_on:
+      - chrome
+    build: .
