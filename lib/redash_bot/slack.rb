@@ -23,8 +23,7 @@ module RedashBot
 
           Thread.new do
             redash.process(data.text).each do |visualization|
-              client.message(channel: data.channel, text: visualization[:link])
-              upload(channel: data.channel, filepath: visualization[:image_path], title: 'redash')
+              upload(channel: data.channel, filepath: visualization[:image_path], title: 'redash', text: visualization[:link])
             end
           end
         end
@@ -35,12 +34,13 @@ module RedashBot
       end
     end
 
-    def upload(channel:, filepath:, title: nil)
+    def upload(channel:, filepath:, title: nil, text: nil)
       options = {
         channels: channel,
         file: Faraday::UploadIO.new(filepath, 'image/png'), # TODO: content_typeはファイルに応じて設定する
       }
       options[:title] = title if title
+      options[:initial_comment] = text if text
 
       logger.info "[#{self.class}##{__method__}] Upload #{filepath} to slack"
       # ファイルのアップロードは Web::Client しかできない
