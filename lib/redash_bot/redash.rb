@@ -64,10 +64,11 @@ module RedashBot
 
     # return Array of Hash including query_id and visualization_id
     def parse_url(text)
-      urls = URI.extract(text, %w[http https]).uniq
+      urls = URI.extract(text.to_s, %w[http https]).uniq
+      host = URI(self.class.base_url).host
       queries = []
       urls.each do |url|
-        if matched = url.match(%r{#{self.class.base_url}/queries/(\d+)(#?(\d+))?})
+        if matched = url.match(%r{#{host}/queries/(\d+)(#?(\d+))?})
           queries << { query_id: matched[1], visualization_id: matched[3] }
         end
       end
