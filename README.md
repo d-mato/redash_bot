@@ -19,4 +19,4 @@ slack:
   token: xoxb-abc-1232
 redash:
   base_url: https://example.redash.jp
-
+  api_key: secret
