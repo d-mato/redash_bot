@@ -1,5 +1,6 @@
 require 'json'
 require 'logger'
+require 'uri'
 require 'capybara'
 
 module RedashBot
@@ -63,10 +64,14 @@ module RedashBot
 
     # return Array of Hash including query_id and visualization_id
     def parse_url(text)
-      data_list = text.to_s.scan(%r{#{self.class.base_url}/queries/(\d+)(#?(\d+))?})
-      data_list.map do |data|
-        { query_id: data[0], visualization_id: data[2] }
+      urls = URI.extract(text, %w[http https]).uniq
+      queries = []
+      urls.each do |url|
+        if matched = url.match(%r{#{self.class.base_url}/queries/(\d+)(#?(\d+))?})
+          queries << { query_id: matched[1], visualization_id: matched[3] }
+        end
       end
+      queries
     end
 
     def build_uri(path)
