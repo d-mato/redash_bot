@@ -18,5 +18,5 @@ Set your api key and etc.
 slack:
   token: xoxb-abc-1232
 redash:
-  base_url: https://example.redash.jp
+  base_url: https://redash.example.jp
   api_key: secret
