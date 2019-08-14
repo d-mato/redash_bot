@@ -42,7 +42,7 @@ module RedashBot
       options[:title] = title if title
       options[:initial_comment] = text if text
 
-      logger.info "[#{self.class}##{__method__}] Upload #{filepath} to slack"
+      logger.info "[#{self.class}##{__method__}] Upload #{filepath} to ##{channel}"
       # ファイルのアップロードは Web::Client しかできない
       client.web_client.files_upload(options)
     end
