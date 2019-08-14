@@ -8,3 +8,4 @@ services:
     depends_on:
       - chrome
     build: .
+    restart: always
