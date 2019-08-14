@@ -56,6 +56,11 @@ module RedashBot
         loop until session.has_css?('visualization-embed')
       end
 
+      if session.has_css?('map-renderer')
+        # FIXME: waiting until map rendered
+        sleep 3
+      end
+
       image_path = session.save_screenshot
       logger.info "[#{self.class}##{__method__}] Save screenshot to #{image_path}"
       session.quit
