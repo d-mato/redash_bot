@@ -3,6 +3,8 @@ require 'logger'
 require 'uri'
 require 'capybara'
 
+Capybara.default_max_wait_time = 30
+
 module RedashBot
   class Redash
     cattr_accessor :base_url, :api_key
@@ -57,8 +59,16 @@ module RedashBot
       end
 
       if session.has_css?('map-renderer')
-        # FIXME: waiting until map rendered
-        sleep 3
+        Timeout.timeout(Capybara.default_max_wait_time) do
+          # ファイルのダウンロードを3秒毎に監視して変更がなくなるまで待つ
+          prev_count = 0
+          loop do
+            sleep 3
+            current_count = session.evaluate_script("performance.getEntriesByType('resource').length").to_i
+            break if current_count == prev_count
+            prev_count = current_count
+          end
+        end
       end
 
       image_path = session.save_screenshot
