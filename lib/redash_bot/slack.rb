@@ -1,5 +1,6 @@
 require 'thread'
 require 'logger'
+require 'mimemagic'
 require 'slack-ruby-client'
 
 module RedashBot
@@ -35,9 +36,10 @@ module RedashBot
     end
 
     def upload(channel:, filepath:, title: nil, text: nil)
+      content_type = MimeMagic.by_magic(File.open(filepath))&.type || 'text/plain'
       options = {
         channels: channel,
-        file: Faraday::UploadIO.new(filepath, 'image/png'), # TODO: content_typeはファイルに応じて設定する
+        file: Faraday::UploadIO.new(filepath, content_type),
       }
       options[:title] = title if title
       options[:initial_comment] = text if text
