@@ -3,8 +3,6 @@ require 'logger'
 require 'uri'
 require 'capybara'
 
-Capybara.default_max_wait_time = 30
-
 module RedashBot
   class Redash
     cattr_accessor :base_url, :api_key
@@ -54,12 +52,13 @@ module RedashBot
       logger.info "[#{self.class}##{__method__}] Visit #{path} with capybara"
       session.visit uri
 
-      Timeout.timeout(Capybara.default_max_wait_time) do
+      Timeout.timeout(30) do
         loop until session.has_css?('visualization-embed')
       end
 
       if session.has_css?('map-renderer')
-        Timeout.timeout(Capybara.default_max_wait_time) do
+        logger.info "[#{self.class}##{__method__}] Wait downloading images"
+        Timeout.timeout(30) do
           # ファイルのダウンロードを3秒毎に監視して変更がなくなるまで待つ
           prev_count = 0
           loop do
@@ -70,6 +69,11 @@ module RedashBot
           end
         end
       end
+
+      # resize window
+      width, _ = session.current_window.size
+      height = session.evaluate_script("document.querySelector('body > section').scrollHeight").to_i
+      session.current_window.resize_to(width, height)
 
       image_path = session.save_screenshot
       logger.info "[#{self.class}##{__method__}] Save screenshot to #{image_path}"
