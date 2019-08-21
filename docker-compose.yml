@@ -4,6 +4,7 @@ services:
     image: robcherry/docker-chromedriver
     environment:
       CHROMEDRIVER_WHITELISTED_IPS: ''
+    restart: always
   app:
     depends_on:
       - chrome
