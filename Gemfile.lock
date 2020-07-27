@@ -1,12 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.0.2.2)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
-      minitest (~> 5.1)
-      tzinfo (~> 1.1)
-      zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     async (1.20.1)
@@ -27,20 +21,16 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    concurrent-ruby (1.1.6)
     console (1.4.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
-    gli (2.19.0)
+    gli (2.19.2)
     hashie (4.1.0)
-    i18n (1.8.2)
-      concurrent-ruby (~> 1.0)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.14.0)
     multipart-post (2.1.1)
     nio4r (2.4.0)
     nokogiri (1.10.9)
@@ -54,23 +44,18 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    slack-ruby-client (0.14.6)
-      activesupport
-      faraday (>= 0.9)
+    slack-ruby-client (0.15.0)
+      faraday (>= 1.0)
       faraday_middleware
       gli
       hashie
       websocket-driver
-    thread_safe (0.3.6)
     timers (4.3.0)
-    tzinfo (1.2.6)
-      thread_safe (~> 0.1)
-    websocket-driver (0.7.1)
+    websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
