@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'thread'
 require 'logger'
 require 'mimemagic'
@@ -5,9 +6,12 @@ require 'slack-ruby-client'
 
 module RedashBot
   class Slack
-    cattr_accessor :token
+    class << self
+      attr_accessor :token
+    end
 
-    delegate :start!, to: :client
+    extend Forwardable
+    delegate start!: :client
 
     def initialize
       raise StandardError, 'slack token is not configured' unless self.class.token

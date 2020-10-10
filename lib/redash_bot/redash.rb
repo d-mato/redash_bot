@@ -5,7 +5,9 @@ require 'capybara'
 
 module RedashBot
   class Redash
-    cattr_accessor :base_url, :api_key
+    class << self
+      attr_accessor :base_url, :api_key
+    end
 
     def initialize
       raise StandardError, 'redash base_url is not configured' unless self.class.base_url
