@@ -1,7 +1,7 @@
 version: '3'
 services:
   chrome:
-    image: robcherry/docker-chromedriver
+    image: robcherry/docker-chromedriver:2.38.552522
     environment:
       CHROMEDRIVER_WHITELISTED_IPS: ''
     restart: always
