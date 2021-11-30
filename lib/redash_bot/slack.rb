@@ -19,7 +19,7 @@ module RedashBot
     private
 
     def client
-      @client ||= ::Slack::RealTime::Client.new(token: self.class.token).tap do |client|
+      @client ||= ::Slack::RealTime::Client.new(token: self.class.token, start_method: :rtm_connect).tap do |client|
         redash = Redash.new
 
         client.on :message do |data|
