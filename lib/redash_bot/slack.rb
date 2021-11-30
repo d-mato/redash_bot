@@ -1,7 +1,6 @@
 require 'forwardable'
 require 'thread'
 require 'logger'
-require 'mimemagic'
 require 'slack-ruby-client'
 
 module RedashBot
@@ -28,7 +27,7 @@ module RedashBot
 
           Thread.new do
             redash.process(data.text).each do |visualization|
-              upload(channel: data.channel, filepath: visualization[:image_path], title: 'redash', text: visualization[:link])
+              upload_image(channel: data.channel, filepath: visualization[:image_path], title: 'redash', text: visualization[:link])
             end
           end
         end
@@ -39,11 +38,10 @@ module RedashBot
       end
     end
 
-    def upload(channel:, filepath:, title: nil, text: nil)
-      content_type = MimeMagic.by_magic(File.open(filepath))&.type || 'text/plain'
+    def upload_image(channel:, filepath:, title: nil, text: nil)
       options = {
         channels: channel,
-        file: Faraday::UploadIO.new(filepath, content_type),
+        file: Faraday::UploadIO.new(filepath, 'image/png')
       }
       options[:title] = title if title
       options[:initial_comment] = text if text

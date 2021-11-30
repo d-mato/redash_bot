@@ -28,7 +28,6 @@ GEM
       faraday (~> 1.0)
     gli (2.19.2)
     hashie (4.1.0)
-    mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     multipart-post (2.1.1)
@@ -63,7 +62,6 @@ PLATFORMS
 DEPENDENCIES
   async-websocket (~> 0.8.0)
   capybara
-  mimemagic
   selenium-webdriver
   slack-ruby-client
 
