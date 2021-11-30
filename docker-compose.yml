@@ -10,3 +10,5 @@ services:
       - chrome
     build: .
     restart: always
+    volumes:
+      - .:/app
