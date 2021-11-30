@@ -28,6 +28,7 @@ module RedashBot
           Thread.new do
             redash.process(data.text).each do |visualization|
               upload_image(channel: data.channel, filepath: visualization[:image_path], title: 'redash', text: visualization[:link])
+              File.delete(visualization[:image_path])
             end
           end
         end
